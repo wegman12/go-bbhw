@@ -62,8 +62,8 @@ func verifyAddrIsTIOmap4(addr uint) bool {
 	return string(buf)[0:13] == "ti,omap4-gpio"
 }
 
-//warning: you must keep the []byte array/slice around
-//so that the []uint32 data will not be garbage collected
+// warning: you must keep the []byte array/slice around
+// so that the []uint32 data will not be garbage collected
 func castByteSliceToUint32Slice(raw []byte) []uint32 {
 	rawlen := len(raw)
 	// Copy the slice header
@@ -82,9 +82,9 @@ func castByteSliceToUint32Slice(raw []byte) []uint32 {
 
 func newGPIORegMMap() (mmapreg *mappedRegisters, err error) {
 	//Verify our memory addresses are actually correct
-	if !(verifyAddrIsTIOmap4(omap4_gpio0_offset_) && verifyAddrIsTIOmap4(omap4_gpio1_offset_) && verifyAddrIsTIOmap4(omap4_gpio2_offset_) && verifyAddrIsTIOmap4(omap4_gpio3_offset_)) {
-		return nil, fmt.Errorf("Looks like we aren't on a AM33xx CPU! Please check your Datasheet and update the code (github) or stick to the SysFSGPIOs")
-	}
+	//if !(verifyAddrIsTIOmap4(omap4_gpio0_offset_) && verifyAddrIsTIOmap4(omap4_gpio1_offset_) && verifyAddrIsTIOmap4(omap4_gpio2_offset_) && verifyAddrIsTIOmap4(omap4_gpio3_offset_)) {
+	//	return nil, fmt.Errorf("Looks like we aren't on a AM33xx CPU! Please check your Datasheet and update the code (github) or stick to the SysFSGPIOs")
+	//}
 	mmapreg = new(mappedRegisters)
 	mmapreg.memgpiochipreg = make([][]byte, 4)
 	mmapreg.memgpiochipreg32 = make([][]uint32, 4)
@@ -168,9 +168,9 @@ func getgpiommap() *mappedRegisters {
 	return mmapped_gpio_register_
 }
 
-//careful with this function! never call it
-//if there's a chance some routine might still be using fast gpios
-//If in Doubt: Never Call It
+// careful with this function! never call it
+// if there's a chance some routine might still be using fast gpios
+// If in Doubt: Never Call It
 func MMappedGPIOCleanup() {
 	if mmapped_gpio_register_ != nil {
 		mmapped_gpio_register_.close()
